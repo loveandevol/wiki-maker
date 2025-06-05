@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>위키 표 생성기</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script src="https://kit.fontawesome.com/751d015302.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="container">
+  <div id="input-section">
+  <div class="input-header">
+    <h1>프로필 표 생성기</h1>
+    <div class="tab-menu">
+      <button class="tab-button active" data-tab="basic">기본 정보</button>
+      <button class="tab-button" data-tab="body">본문</button>
+      <button class="tab-button" data-tab="note">주석</button>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-basic">
+    <div class="color-picker-wrapper">
+      <label for="mainColorPicker" class="color-display" title="메인 색상 선택"></label>
+      <input type="color" id="mainColorPicker" value="#8d27ae" />
+      <span>메인 색상 선택</span>
+    </div>
+
+    <div class="input-row">
+      <div class="input-fields">
+        <input id="charName" placeholder="캐릭터 이름" />
+        <input id="jpSurname" placeholder="일본 성" />
+        <input id="jpSurnameFurigana" placeholder="성 후리가나" />
+        <input id="jpName" placeholder="일본 이름" />
+        <input id="jpNameFurigana" placeholder="이름 후리가나" />
+        <input id="enName" placeholder="영문 이름" />
+        <input id="imageUrl" placeholder="캐릭터 이미지 URL" />
+        <input id="copyright" placeholder="커미션 출처" />
+      </div>
+      <div class="field-list-wrapper">
+        <div id="field-list">
+          <div class="field-row">
+            <input class="field-name" placeholder="항목명" />
+            <input class="field-value" placeholder="내용" />
+          </div>
+        </div>
+        <button onclick="addField()">항목 추가</button>
+      </div>
+    </div>
+    <!-- <div style="width: 100%; margin-top: 10px;">
+        <button id="global-note-button">주석 추가</button>
+    </div> -->
+  </div>
+
+  <div class="tab-content hidden" id="tab-body">
+    <div id="body-editor">
+      <div id="title-blocks"></div>
+      <button id="add-title-button">제목 추가</button>
+    </div>
+  </div>
+
+  <div class="tab-content hidden" id="tab-note">
+    <textarea placeholder="주석을 입력하세요..." rows="5"></textarea>
+  </div>
+
+  <div class="output-wrapper">
+    <h2>HTML 코드</h2>
+    <textarea id="output" readonly rows="15"></textarea>
+    <div class="button-row"><button onclick="generateHTML()">코드 생성</button><button onclick="copyCode()">코드 복사</button>
+</div>
+  </div>
+</div>
+
+
+    <div id="preview-section">
+      <h2>미리보기</h2>
+      <p class="description">사용 환경에 따라 미리보기와 실제 적용 모습이 다를 수 있어요.</p>
+      <div id="preview"></div>
+    </div>
+  </div>
+
+  <!-- 왼쪽 아래 도움말 아이콘 -->
+  <div id="help-button"><i class="fa-solid fa-question"></i></div> 
+  <!-- 팝업 박스 -->
+  <div id="help-popup" class="hidden">
+  <div class="help-content">
+    <div class="how-to-info">
+      <h5>사용 방법</h5>
+      <ol>
+        <li>각 입력란에 캐릭터 정보를 입력하세요.</li>
+        <li><span class="keyword-highlight">항목 추가</span>로 원하는 만큼 줄을 추가할 수 있어요.</li>
+        <li><span class="keyword-highlight">코드 생성</span>을 누르면 HTML 코드가 생성되고, <span class="keyword-highlight">코드 복사</span>로 복사할 수 있어요.</li>
+        <li>티스토리의 글쓰기에서 우측 상단 기본모드 > <span class="keyword-highlight">html 모드</span>로 변경 후 복사한 코드를 붙여넣으면 끝!</li>
+      </ol>
+    </div>
+    <div class="how-to-tip">
+      <h5>TIPS</h5>
+      <ol>
+        <li>캐릭터 정보는 수정 후 코드 생성을 <b>재클릭</b>하면 변경이 가능해요!</li>
+        <li>각 항목은 드래그로 순서를 변경할 수 있어요. 변경 후 코드 생성을 클릭해주세요.</li>
+        <li>입력한 내용을 삭제하고 싶다면 내용을 공란으로 바꿔주세요.</li>
+      </ol>
+    </div>
+    <button id="close-help">닫기</button>
+  </div>
+  </div>
+
+  <script src="newscript.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
