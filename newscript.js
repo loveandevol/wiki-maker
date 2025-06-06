@@ -75,6 +75,210 @@ const fullHTML = `
     .wiki-main-table, .wt-name, .wt-color {
       --wikimaincolor: ${color};
     }
+     #wikiwrap {
+	font-family: "Pretendard JP Variable", "Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Hiragino Sans", "Apple SD Gothic Neo", Meiryo, "Noto Sans JP", "Noto Sans KR", "Malgun Gothic", Osaka, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+	box-sizing : border-box;
+	font-size: 15px;
+	line-height: 1.5;
+      --wikitextcolor: #ffffff;
+  }
+
+#wikiwrap a{
+    color: #0275d8 !important;
+    text-decoration: none;
+}
+
+#wikiwrap a::before{
+    content: none !important;
+}
+
+#wikiwrap a::after{
+    content: none !important;
+}
+
+
+.wiki-main-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid var(--wikimaincolor);
+  font-size: 14.4px;
+  line-height: 1.5;
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.wt-name {
+  padding: 5px 10px;
+  border: 2px solid var(--wikimaincolor);
+  text-align: center;
+  background-color: var(--wikimaincolor);
+  color: var(--wikitextcolor);
+}
+
+.wt-copyright {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #000000;
+}
+
+.wt-color {
+  width: 30%;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  background-color: var(--wikimaincolor);
+  color: var(--wikitextcolor);
+}
+
+.wt-detail {
+  width: 70%;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  color: #000000;
+}
+
+summary {
+    list-style-type: none;
+	opacity: 0.5;
+    align-items: center;
+    justify-content: center;
+}
+
+summary::-webkit-details-marker {
+	display: none;
+}
+
+details[open] summary {
+	opacity: 1;
+}
+
+.wiki-h1-icon ion-icon {
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+
+details[open] .wiki-h1-icon ion-icon {
+  transform: rotate(0deg);
+}
+
+.wiki-h2-icon ion-icon {
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+
+details[open] .wiki-h2-icon ion-icon {
+  transform: rotate(0deg);
+}
+
+.wiki-h3-icon ion-icon {
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+}
+
+details[open] .wiki-h3-icon ion-icon {
+  transform: rotate(0deg);
+}
+
+.text1 {
+	font-size: 15px;
+    line-height: 1.5;
+}
+a{text-decoration: none;}
+a::before{content: none;}
+
+.text1 a{
+	color: #0275d8 !important;
+    text-decoration: none;
+}
+.text1 a::before{
+	content: none !important;
+}
+
+.wiki-category{
+	width: 100%; border: 1px solid #ccc; border-radius: 4px; font-size: .9rem; font-weight: normal; line-height: 1.5; margin: 0 0 1em; padding: 0.2rem 0.5rem;
+}
+.wiki-category a{
+	color: #0275d8 !important;
+    text-decoration: none;
+}
+.wiki-category a::before{
+	content: none !important;
+}
+
+.wiki-h1{
+	font-size: 1.8em; border-bottom: 1px solid #ccc; margin: 1.2em 0 0.7em; padding-bottom: 5px;
+}
+
+.wiki-h1-icon{
+	color: #666; float: left; font-weight: 400; line-height: 1em;  margin: 0.3em 0.4em 0 0.2em; text-align: center; width: 0.9em;
+}
+
+.wiki-h2{
+	font-size: 1.6em; border-bottom: 1px solid #ccc; margin: 1.2em 0 0.7em; padding-bottom: 5px;
+}
+
+.wiki-h2-icon{
+	color: #666; float: left; font-weight: 400; line-height: 1em; margin: 0.2em 0.4em 0 0.2em; text-align: center; width: 0.9em;
+}
+
+.wiki-h3{
+	font-size: 1.4em; border-bottom: 1px solid #ccc; margin: 1.2em 0 0.7em; padding-bottom: 5px;
+}
+
+.wiki-h3-icon{
+	color: #666; float: left; font-weight: 400; line-height: 1em; margin: 0.2em 0.4em 0 0.2em; text-align: center; width: 0.9em;
+}
+
+.wiki-index{
+	border-collapse: collapse; width: auto; border: 1px solid #cccccc; margin: 0 0 20px 5px; line-height: 180%;
+}
+.wiki-index a{
+	color: #0275d8 !important;
+    text-decoration: none;
+}
+.wiki-index a::before{
+	content: none !important;
+}
+
+.wiki-quote{
+	border-collapse: collapse; width: auto; height: auto; margin: 1em 0;
+}
+
+.wiki-quote tr{
+	height: auto;
+}
+
+.wiki-quote td{
+	width: 100%; border: 2px dashed #ccc; border-left: 5px solid var(--wikimaincolor); background: #eee; padding: 1em; line-height: 160%;
+}
+
+.wiki-quote hr{
+	border: 0; border-top: 0.0625rem solid #ccc; margin: 0.5em 0;
+}
+
+.wiki-footnote{
+	border-top: solid 1px #777; margin: 1.5em 0; padding: .5em 0;
+}
+
+.wikigreenicon {
+background: green;
+color: white;
+padding: 0 .08em;
+font-size: 15px;
+vertical-align: middle;
+}
+.wikigreentext {
+color: green;
+vertical-align: middle;
+font-size: 15px;
+line-height: 1.5;
+}
+.wikigreen:hover {
+text-decoration: underline;
+text-decoration-color: green;
+}
   </style>
   ${categoryHTML}
   <table class="wiki-main-table">
