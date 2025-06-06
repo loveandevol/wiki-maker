@@ -214,6 +214,22 @@ input:-webkit-autofill {
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
+.quote-color-display {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  background-color: #c1cfa1;
+}
+
+.quote-color-picker {
+  display: none; /* 숨기고 label 클릭으로 대체 */
+}
+
+
 .field-list-wrapper {
   display: flex;
   flex-direction: column;
