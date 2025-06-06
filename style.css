@@ -2,7 +2,7 @@
 
 
 * {
-    --wikimaincolor: #8d27ae;
+    --wikimaincolor: #C1CFA1;
     --wikitextcolor: #ffffff;
     --primary-color: #555555;
     --secondary-color: #fafafa;
@@ -803,13 +803,15 @@ text-decoration-color: green;
 
 
 .content-delete, .title-delete {
-  position: relative;
+  position: absolute;
   display: inline-block;
   margin-top: 8px;
   color: #888;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s ease;
+  right: 10px;
+  bottom: 10px;
 }
 
 .content-delete:hover, .title-delete:hover {
