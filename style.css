@@ -858,3 +858,18 @@ text-decoration-color: green;
 .content-delete:hover {
   color: red;
 } */
+
+
+
+.button-row.spaced-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.left-buttons, .right-buttons {
+  display: flex;
+  gap: 10px;
+}
+
