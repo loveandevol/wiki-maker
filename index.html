@@ -69,13 +69,15 @@
   <div class="output-wrapper">
     <h2>HTML 코드</h2>
     <textarea id="output" readonly rows="15"></textarea>
-    <div class="button-row"><button onclick="generateHTML()">코드 생성</button><button onclick="copyCode()">코드 복사</button>
-      <div class="button-row">
+    <div class="button-row spaced-buttons">
+      <div class="left-buttons">
+      <button onclick="generateHTML()">코드 생성</button><button onclick="copyCode()">코드 복사</button>
+      </div>
+  <div class="right-buttons">
   <button onclick="saveData()">저장</button>
-  <label style="cursor: pointer;">
-    <input type="file" accept=".json" onchange="loadData(event)" style="display: none;" />
-    <span style="padding: 10px 14px; background-color: #C1CFA1; color: white; border-radius: 4px; display: inline-block;">불러오기</span>
-  </label>
+    <button onclick="document.getElementById('fileInput').click()">불러오기</button>
+    <input type="file" id="fileInput" accept=".json" onchange="loadData(event)" style="display: none;" />
+  </div>
 </div>
 
 </div>
