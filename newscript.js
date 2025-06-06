@@ -27,6 +27,8 @@ function generateHTML() {
   const enName = document.getElementById("enName").value.trim();
   const imageUrl = document.getElementById("imageUrl").value.trim();
   const copyright = document.getElementById("copyright").value.trim();
+  const categoryText = document.getElementById("categoryText").value.trim();
+  const categoryLink = document.getElementById("categoryLink").value.trim();
 
   // 일본어 이름 구성
   let rubyBlock = '';
@@ -54,10 +56,18 @@ function generateHTML() {
       detailRows += `<tr><td class="wt-color">${field}</td><td class="wt-detail">${value}</td></tr>\n`;
     }
   });
-
+let categoryHTML = "";
+if (categoryText) {
+  if (categoryLink) {
+    categoryHTML = `<p class="wiki-category">분류: <a href="${categoryLink}" target="_blank">${categoryText}</a></p>`;
+  } else {
+    categoryHTML = `<p class="wiki-category">분류: <span style="color: #0275d8">${categoryText}</span></p>`;
+  }
+}
   const indexHTML = generateIndexHTML();
   // 최종 HTML 조합
   const bodyHTML = generateBodyHTML();
+  
 
 const fullHTML = `
 <div id="wikiwrap">
@@ -66,6 +76,7 @@ const fullHTML = `
       --wikimaincolor: ${color};
     }
   </style>
+  ${categoryHTML}
   <table class="wiki-main-table">
     <tbody>
       <tr>
