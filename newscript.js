@@ -634,3 +634,218 @@ document.getElementById("help-popup").addEventListener("click", (e) => {
     document.getElementById("help-popup").classList.add("hidden");
   }
 });
+
+function saveData() {
+  const data = {
+    // 기본 정보
+    charName: document.getElementById("charName").value,
+    jpSurname: document.getElementById("jpSurname").value,
+    jpSurnameFurigana: document.getElementById("jpSurnameFurigana").value,
+    jpName: document.getElementById("jpName").value,
+    jpNameFurigana: document.getElementById("jpNameFurigana").value,
+    enName: document.getElementById("enName").value,
+    imageUrl: document.getElementById("imageUrl").value,
+    copyright: document.getElementById("copyright").value,
+    categoryText: document.getElementById("categoryText").value,
+    categoryLink: document.getElementById("categoryLink").value,
+
+    // 항목 리스트
+    fields: Array.from(document.querySelectorAll(".field-row")).map(row => ({
+      name: row.querySelector(".field-name").value,
+      value: row.querySelector(".field-value").value
+    })),
+
+    // 본문 구조 저장
+    titles: Array.from(document.querySelectorAll(".title-entry")).map(entry => {
+      const level = entry.querySelector('input[type="radio"]:checked')?.value;
+      const titleText = entry.querySelector(".title-text")?.value;
+
+      const contents = Array.from(entry.querySelectorAll(".content-block")).map(block => {
+        if (block.querySelector(".content-editor")) {
+          return {
+            type: "text",
+            content: block.querySelector(".content-editor").innerHTML
+          };
+        } else if (block.querySelector(".quote2-dialog")) {
+          return {
+            type: "quote2",
+            dialog: block.querySelector(".quote2-dialog").innerHTML,
+            desc: block.querySelector(".quote2-desc").innerHTML,
+            link: block.querySelector(".quote2-link").value,
+            color: block.querySelector(".quote-color-picker").value
+          };
+        } else if (block.querySelector(".wiki-quote") && block.querySelector(".quote-color-picker")) {
+          return {
+            type: "quote",
+            content: block.querySelector("td").innerHTML,
+            color: block.querySelector(".quote-color-picker").value
+          };
+        } else if (block.querySelector('td[style*="border-top: 5px solid orange"]')) {
+          return {
+            type: "warn"
+          };
+        }
+      });
+
+      return {
+        level,
+        titleText,
+        contents
+      };
+    })
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "profile_data_full.json";
+  a.click();
+}
+
+function loadData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const data = JSON.parse(e.target.result);
+
+    // 기본 정보 입력
+    document.getElementById("charName").value = data.charName || "";
+    document.getElementById("jpSurname").value = data.jpSurname || "";
+    document.getElementById("jpSurnameFurigana").value = data.jpSurnameFurigana || "";
+    document.getElementById("jpName").value = data.jpName || "";
+    document.getElementById("jpNameFurigana").value = data.jpNameFurigana || "";
+    document.getElementById("enName").value = data.enName || "";
+    document.getElementById("imageUrl").value = data.imageUrl || "";
+    document.getElementById("copyright").value = data.copyright || "";
+    document.getElementById("categoryText").value = data.categoryText || "";
+    document.getElementById("categoryLink").value = data.categoryLink || "";
+
+    // 항목 필드
+    const fieldList = document.getElementById("field-list");
+    fieldList.innerHTML = "";
+    (data.fields || []).forEach(item => {
+      const row = document.createElement("div");
+      row.className = "field-row";
+      row.innerHTML = `
+        <input class="field-name" value="${item.name}" placeholder="항목명" />
+        <input class="field-value" value="${item.value}" placeholder="내용" />
+      `;
+      fieldList.appendChild(row);
+    });
+
+    // 본문 구조 복원
+    const titleContainer = document.getElementById("title-blocks");
+    titleContainer.innerHTML = "";
+
+    (data.titles || []).forEach(title => {
+      const block = document.createElement("div");
+      block.className = "title-entry";
+
+      const levelId = `level-${Date.now() + Math.random()}`;
+      block.innerHTML = `
+        <div class="title-meta">
+          <div class="title-level">
+            <label class="level-option">
+              <input type="radio" name="${levelId}" value="1" ${title.level === "1" ? "checked" : ""} />
+              <span class="level-box level-1">대</span>
+            </label>
+            <label class="level-option">
+              <input type="radio" name="${levelId}" value="2" ${title.level === "2" ? "checked" : ""} />
+              <span class="level-box level-2">중</span>
+            </label>
+            <label class="level-option">
+              <input type="radio" name="${levelId}" value="3" ${title.level === "3" ? "checked" : ""} />
+              <span class="level-box level-3">소</span>
+            </label>
+          </div>
+          <input class="title-text" value="${title.titleText || ""}" placeholder="제목 텍스트를 입력하세요" />
+        </div>
+        <div class="content-extra"></div>
+        <div class="content-buttons">
+          <button onclick="addContent(this, 'text')">본문</button>
+          <button onclick="addContent(this, 'quote')">대사</button>
+          <button onclick="addContent(this, 'quote2')">대사2</button>
+          <button onclick="addContent(this, 'warn')">주의 박스</button>
+        </div>
+        <span class="title-delete" onclick="this.closest('.title-entry').remove()"><i class="fa-solid fa-trash"></i></span>
+      `;
+
+      titleContainer.appendChild(block);
+
+      const extra = block.querySelector(".content-extra");
+
+      (title.contents || []).forEach(content => {
+        const div = document.createElement("div");
+        div.className = "content-block";
+
+        if (content.type === "text") {
+          div.innerHTML = `
+            <div class="content-editor text1" contenteditable="true" data-placeholder="본문 내용을 입력하세요">${content.content}</div>
+            <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
+          `;
+        } else if (content.type === "quote") {
+          div.innerHTML = `
+            <div class="color-picker-wrapper">
+              <label class="quote-color-display" title="대사 색상 선택" style="background-color: ${content.color};"></label>
+              <input type="color" class="quote-color-picker" value="${content.color}" />
+              <span>대사 색상 선택</span>
+            </div>
+            <table class="wiki-quote"><tbody><tr>
+              <td class="text1" contenteditable="true">${content.content}</td>
+            </tr></tbody></table>
+            <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
+          `;
+        } else if (content.type === "quote2") {
+          div.innerHTML = `
+            <div class="color-picker-wrapper">
+              <label class="quote-color-display" title="대사 색상 선택" style="background-color: ${content.color};"></label>
+              <input type="color" class="quote-color-picker" value="${content.color}" />
+              <span>대사 색상 선택</span>
+            </div>
+            <table class="wiki-quote"><tbody><tr><td class="text1">
+              <div contenteditable="true" class="quote2-dialog">${content.dialog}</div>
+              <hr />
+              <div contenteditable="true" class="quote2-desc">${content.desc}</div>
+            </td></tr></tbody></table>
+            <input type="text" class="quote2-link" value="${content.link}" placeholder="링크를 입력하세요 (선택)" />
+            <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
+          `;
+        } else if (content.type === "warn") {
+          div.innerHTML = `
+            <table class="text1" style="border-collapse: collapse; width: 100%; border: 1px solid #dddddd;" data-ke-align="alignLeft">
+              <tbody><tr><td style="width: 100%; border: 1px solid gray; border-top: 5px solid orange; padding: 12px;">
+              <span style="font-size: 1.3em;">이 문서에</span> 
+              <a style="color: #0275d8; font-size: 1.3em;" href="https://namu.wiki/w/%EC%8A%A4%ED%8F%AC%EC%9D%BC%EB%9F%AC" target="_blank" rel="noopener">스포일러</a>
+              <span style="font-size: 1.3em;">가 포함되어 있습니다.</span><br /><br />
+              이 문서가 설명하는 작품이나 인물 등에 대한 줄거리, 결말, 반전 요소 등을 직·간접적으로 포함하고 있습니다.
+              </td></tr></tbody>
+            </table>
+            <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
+          `;
+        }
+
+        // 색상 선택 동작 부여
+        const colorDisplay = div.querySelector(".quote-color-display");
+        const colorPicker = div.querySelector(".quote-color-picker");
+        if (colorDisplay && colorPicker) {
+          colorDisplay.addEventListener("click", () => colorPicker.click());
+          colorPicker.addEventListener("input", e => {
+            colorDisplay.style.backgroundColor = e.target.value;
+          });
+        }
+
+        extra.appendChild(div);
+      });
+
+      new Sortable(extra, {
+        animation: 150,
+        handle: ".content-block"
+      });
+    });
+  };
+
+  reader.readAsText(file);
+}
