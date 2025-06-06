@@ -396,10 +396,7 @@ function addContent(button, type) {
   if (type === "text") {
     block.innerHTML = `
       <div class="content-editor text1" contenteditable="true" data-placeholder="본문 내용을 입력하세요"></div>
-      <div class="block-controls">
-        <button disabled>주석</button>
-        <button disabled>출처</button>
-      </div>
+
       <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
     `;
     } else if (type === "quote") {
@@ -408,22 +405,32 @@ function addContent(button, type) {
     //   <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
     // `;
     block.innerHTML = `
-    <div class="quote-color">
-        <label style="font-size: .9em;">색상:</label>
-        <input type="color" class="quote-color-picker" value="#c1cfa1" />
-    </div>
+    <div class="color-picker-wrapper">
+  <label class="quote-color-display" title="대사 색상 선택"></label>
+  <input type="color" class="quote-color-picker" value="#c1cfa1" />
+  <span>대사 색상 선택</span>
+</div>
     <table class="wiki-quote"><tbody><tr>
     <td class="text1" contenteditable="true">대사 내용을 입력하세요</td>
     </tr></tbody></table>
     <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
     `;
+	  // label과 input 연결
+block.querySelector(".quote-color-display").addEventListener("click", () => {
+  block.querySelector(".quote-color-picker").click();
+});
+
+block.querySelector(".quote-color-picker").addEventListener("input", (e) => {
+  block.querySelector(".quote-color-display").style.backgroundColor = e.target.value;
+});
 
     } else if (type === "quote2") {
     block.innerHTML = `
-      <div class="quote-color">
-        <label style="font-size: .9em;">색상:</label>
-        <input type="color" class="quote-color-picker" value="#c1cfa1" />
-      </div>
+      <div class="color-picker-wrapper">
+  <label class="quote-color-display" title="대사 색상 선택"></label>
+  <input type="color" class="quote-color-picker" value="#c1cfa1" />
+  <span>대사 색상 선택</span>
+</div>
       <table class="wiki-quote"><tbody><tr><td class="text1">
         <div contenteditable="true" class="quote2-dialog">대사2 내용을 입력하세요</div>
         <hr />
@@ -432,6 +439,15 @@ function addContent(button, type) {
       <input type="text" class="quote2-link" placeholder="링크를 입력하세요 (선택)" />
       <span class="content-delete" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash"></i></span>
     `;
+	  // label과 input 연결
+block.querySelector(".quote-color-display").addEventListener("click", () => {
+  block.querySelector(".quote-color-picker").click();
+});
+
+block.querySelector(".quote-color-picker").addEventListener("input", (e) => {
+  block.querySelector(".quote-color-display").style.backgroundColor = e.target.value;
+});
+
 
 } else if (type === "warn") {
     block.innerHTML = `
