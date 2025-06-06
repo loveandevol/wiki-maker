@@ -93,9 +93,13 @@ h2{font-size: 1.3em;}
   pointer-events: none;
 } */
 
-.output-wrapper{
-  margin-top: auto;
+.output-wrapper {
+	  margin-top: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;  /* 혹시 모를 가로 스크롤 허용 */
 }
+
 
 .tab-menu {
   display: flex;
@@ -874,6 +878,12 @@ text-decoration-color: green;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
 }
+.right-buttons {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 
