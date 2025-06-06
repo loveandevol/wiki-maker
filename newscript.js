@@ -637,6 +637,7 @@ document.getElementById("help-popup").addEventListener("click", (e) => {
 
 function saveData() {
   const data = {
+	  mainColor: document.getElementById("mainColorPicker").value,
     // 기본 정보
     charName: document.getElementById("charName").value,
     jpSurname: document.getElementById("jpSurname").value,
@@ -710,6 +711,12 @@ function loadData(event) {
   const reader = new FileReader();
   reader.onload = function (e) {
     const data = JSON.parse(e.target.result);
+
+	  // 메인 색상 복원
+    if (data.mainColor) {
+      document.getElementById("mainColorPicker").value = data.mainColor;
+      document.querySelector(".color-display").style.backgroundColor = data.mainColor;
+    }
 
     // 기본 정보 입력
     document.getElementById("charName").value = data.charName || "";
