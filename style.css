@@ -352,9 +352,11 @@ input:-webkit-autofill {
   padding: 25px;
   width: 90%;
   max-width: 400px;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   text-align: left;
+display: flex;
+flex-direction: column;
 }
 
 /* 텍스트 스타일 */
@@ -373,10 +375,11 @@ input:-webkit-autofill {
 
 .how-to-info{
   margin-bottom: 18px;
+  padding: 0 10px;
 }
 .how-to-info h5{
-  font-size: 1em;
-  margin: 0;
+  font-size: 1.2em;
+    margin: 0 0 15px 0;
 }
 .how-to-info ol {
   font-size: .9em;
@@ -390,6 +393,7 @@ input:-webkit-autofill {
 
 .how-to-tip{
   margin: 10px 0;
+ padding: 0 10px;
 }
 .how-to-tip h5{
   font-size: 1em;
@@ -406,7 +410,7 @@ input:-webkit-autofill {
 .how-to-tip li {
   position: relative;
   padding-left: 1.5em;
-  margin: 6px 0;
+  margin: 8px 0;
   /* font-size: 0.9em; */
   line-height: 1.5;
 }
@@ -421,6 +425,10 @@ input:-webkit-autofill {
   left: 0;
   top: 0;
   line-height: 1.5;
+}
+
+.help-content > button {
+  align-self: flex-end;
 }
 
 .keyword-highlight {
