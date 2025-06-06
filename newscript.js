@@ -495,7 +495,7 @@ function generateBodyHTML() {
     const headingClass = level === "1" ? "wiki-h1" : level === "2" ? "wiki-h2" : "wiki-h3";
     const iconClass = level === "1" ? "wiki-h1-icon" : level === "2" ? "wiki-h2-icon" : "wiki-h3-icon";
 
-    bodyHTML += `<details open><summary class="text1"><h2 class="${headingClass}"><span class="${iconClass}"><ion-icon name="chevron-down-outline"></ion-icon></span> <b><a name="${anchor}"></a><a href="#목차">${indexText}</a> ${text}</b></h2></summary>\n`;
+    bodyHTML += `<details open><summary class="text1"><h2 class="${headingClass}"><span class="${iconClass}"><ion-icon name="chevron-down-outline"></ion-icon></span> <a name="${anchor}"></a><a href="#목차">${indexText}</a> ${text}</h2></summary>\n`;
 
     contents.forEach(block => {
         if (block.querySelector(".content-editor")) {
